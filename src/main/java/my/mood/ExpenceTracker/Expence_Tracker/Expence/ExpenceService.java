@@ -44,4 +44,13 @@ public class ExpenceService {
 		return entity;
 	}
 	
+	// Update an existing expence
+	public Expence_Entity updateExpence(int id, Expence_Entity entity) {
+		Predicate<? super Expence_Entity> predicate = expence -> expence.getId() == id;
+		expences.removeIf(predicate);
+		entity.setId(id);
+		expences.add(entity);
+		return entity;
+	}
+	
 }

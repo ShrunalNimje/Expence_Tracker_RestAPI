@@ -4,21 +4,34 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Expence_Entity {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	@NotBlank(message = "Title should not be emmpty")
+	@Size(min = 3, message = "Title must be at least of 3 characters")
 	private String title;
 	
+	@Min(value = 1, message = "Amount should be greater than 0")
 	private int amount;
 	
+	@NotBlank(message = "Category should not be emmpty")
+	@Size(min = 3, message = "Category must be at least of 3 characters")
 	private String category;
 	
+	@NotNull
+	@Past(message = "Date shoule be past")
 	private LocalDate date;
 	
 	public Expence_Entity() {

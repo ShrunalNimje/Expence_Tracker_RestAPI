@@ -21,7 +21,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		
-		// 1) All requests should be authenticated
+		// 1) To authenticate each and every request which will come into system
 		http.authorizeHttpRequests(
 				auth -> auth.anyRequest().authenticated()
 				);
@@ -29,22 +29,24 @@ public class SecurityConfig {
 		// 2) If request is not authenticated, a pop up is shown
 		http.httpBasic(withDefaults());
 		
-		// 3) CSRF -> post, put
+		// 3) CSRF is disabled
 		http.csrf(csrf-> csrf.disable());
 		
 		return http.build();
 	}
 	
+	// Core interface which loads user-specific data
 	@Bean
 	public UserDetailsService userDetailsService() {
 	    UserDetails user = User.withUsername("Shrunal")
-	            .password(passwordEncoder().encode("dummy")) // 🔥 Encode the password!
+	            .password(passwordEncoder().encode("dummy")) 
 	            .roles("USER")
 	            .build();
 
 	    return new InMemoryUserDetailsManager(user);
 	}
 	
+	// Service interface for encoding passwords
 	@Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(); 

@@ -33,6 +33,7 @@ public class ExpenceController {
         this.expenceRepository = expenceRepository;
     }
     
+    // It will retrieve all the expenses
     @GetMapping("/expences")
     public Page<Expence_Entity> retrieveAllExpences(
         @RequestParam(defaultValue = "0") int page, 
@@ -46,13 +47,14 @@ public class ExpenceController {
 		// return expenceRepository.findAll();
     }
 
-
+    // It will retrieve a specific expense provided by id
     @GetMapping("/expences/{id}")
     public Optional<Expence_Entity> retrieveSpecificExpence(@PathVariable int id) {
         // return expenceService.retrieveFromId(id);
     	return expenceRepository.findById(id);
     }
 
+    // It will delete a specific expense provided by id
     @DeleteMapping("/expences/{id}")
     public void deleteSpecificExpence(@PathVariable int id) {
          // expenceService.deleteFromId(id);
@@ -67,12 +69,14 @@ public class ExpenceController {
     	}
     }
 
+    // It will create or add an expense
     @PostMapping("/expences")
     public Expence_Entity addExpence(@Valid @RequestBody Expence_Entity entity) {
         // return expenceService.addExpence(entity);
     	return expenceRepository.save(entity);
     }
     
+    // It will update the existing expense provided by id
     @PutMapping("/expences/{id}")
     public Expence_Entity updateExpence(@PathVariable int id,  @Valid @RequestBody Expence_Entity entity) {
     	Optional<Expence_Entity> existingExpence = expenceRepository.findById(id);
@@ -95,6 +99,7 @@ public class ExpenceController {
     	
     }
     
+    // It will retrieve all the expenses provided by category
     @GetMapping("/expences/category/{category}")
     public List<Expence_Entity> retrieveByCategory(@PathVariable String category) {
         // return expenceService.retrieveFromId(id);

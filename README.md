@@ -8,7 +8,6 @@ A simple yet efficient **Expense Tracker API** built using **Spring Boot** with 
 - **CRUD Operations** for Expenses
 - **Category-based Expense Tracking**
 - **Database Connectivity** (SQL Database in a Docker container)
-- **RESTful APIs** following best practices
 
 ## 🛠️ Tech Stack
 
@@ -17,7 +16,7 @@ A simple yet efficient **Expense Tracker API** built using **Spring Boot** with 
 - **Spring Data JPA**
 - **Spring Security** (Basic Authentication)
 - **Docker**
-- **MySQL / PostgreSQL (in Docker container)**
+- **MySQL (in Docker container)**
 
 ## 📌 API Endpoints
 
@@ -53,7 +52,6 @@ docker-compose up -d
 
 ## 🔐 Authentication
 - Uses Basic Authentication with username & password.
-- Each user can access only their own expenses.
 
 ## 🏗️ Future Enhancements
 - ✅ JWT Authentication

@@ -21,10 +21,8 @@ A simple yet efficient **Expense Tracker API** built using **Spring Boot** with 
 
 ## 📌 API Endpoints
 
-| Method  | Endpoint                 | Description                |
-|---------|--------------------------|----------------------------|
-| `POST`  | `/api/auth/register`      | Register a new user        |
-| `POST`  | `/api/auth/login`         | Login user                 |
+| Method  | Endpoint                  | Description                |
+|---------|---------------------------|----------------------------|
 | `GET`   | `/api/expenses`           | Get all expenses           |
 | `GET`   | `/api/expenses/{id}`      | Get expense by ID          |
 | `POST`  | `/api/expenses`           | Add a new expense          |
@@ -37,3 +35,29 @@ A simple yet efficient **Expense Tracker API** built using **Spring Boot** with 
 ```sh
 git clone https://github.com/ShrunalNimje/Expence_Tracker.git
 cd Expence_Tracker
+```
+### 2️⃣ Start Docker Container
+Ensure Docker is installed and running.
+```sh
+docker-compose up -d
+```
+
+### 3️⃣ Run the Application
+
+```sh
+./mvnw spring-boot:run
+```
+
+### 4️⃣ Access the API
+- Visit http://localhost:8080/expences to start using the API.
+
+## 🔐 Authentication
+- Uses Basic Authentication with username & password.
+- Each user can access only their own expenses.
+
+## 🏗️ Future Enhancements
+- ✅ JWT Authentication
+- ✅ User Roles & Authorization
+  
+## ⭐ Contribute
+- Feel free to fork this repository, make changes, and create a pull request!

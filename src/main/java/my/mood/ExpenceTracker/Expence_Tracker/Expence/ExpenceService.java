@@ -1,57 +1,88 @@
 package my.mood.ExpenceTracker.Expence_Tracker.Expence;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import my.mood.ExpenceTracker.Expence_Tracker.DTO.ExpenceCreateDTO;
+import my.mood.ExpenceTracker.Expence_Tracker.DTO.ExpenceUpdateDTO;
+import my.mood.ExpenceTracker.Expence_Tracker.Error.ExpencesNotFoundException;
 
 @Service
 public class ExpenceService {
 	
-	public static List<Expence_Entity> expences = new ArrayList<>();
-	public static int countId = 0;
+	@Autowired
+	ExpenceRepository expenceRepository;
 	
-	// It will add by default this below expenses initially
-	static {
-		expences.add(new Expence_Entity(++countId, "Home", 10000, "Grocery", LocalDate.now().plusMonths(4)));
-		expences.add(new Expence_Entity(++countId, "Home", 8000, "Electricity Bill", LocalDate.now().plusMonths(4)));
-		expences.add(new Expence_Entity(++countId, "Home", 6000, "Gym", LocalDate.now().plusMonths(4)));
-		expences.add(new Expence_Entity(++countId, "Home", 4000, "Others", LocalDate.now().plusMonths(4)));
+	public ExpenceService(ExpenceRepository expenceRepository) {
+		this.expenceRepository = expenceRepository;
 	}
 	
 	// Retrieve all Expenses
-	public List<Expence_Entity> retrieveAll() {
-		return expences;
+	public Page<Expence_Entity> retrieveAll(Pageable pageable) {
+        return expenceRepository.findAll(pageable);
 	}
 	
 	// Retrieve a specific expense
-	public Expence_Entity retrieveFromId(int id) {
-		Predicate<? super Expence_Entity> predicate = expence -> expence.getId() == id;
-		return expences.stream().filter(predicate).findFirst().orElseThrow(() -> new RuntimeException("Expence not found with id = " + id));
+	public Optional<Expence_Entity> retrieveFromId(int id) {
+		return expenceRepository.findById(id);
 	}
 	
 	// Delete a specific expense
-	public void deleteFromId(int id) {
-		Predicate<? super Expence_Entity> predicate = expence -> expence.getId() == id;
-		expences.removeIf(predicate);
+	public ResponseEntity<String> deleteFromId(int id) {
+		expenceRepository.findById(id)
+		.orElseThrow(() -> new ExpencesNotFoundException("Expense not found with id = " + id));
+
+		expenceRepository.deleteById(id);
+		return ResponseEntity.ok("User deleted successfully with id = " + id);
 	}
 	
 	// Add or create an expense
-	public Expence_Entity addExpence(Expence_Entity entity) {
-		entity.setId(++countId);
-		expences.add(entity);
-		return entity;
+	public ResponseEntity<String> addExpence(ExpenceCreateDTO addEntity) {
+		Expence_Entity entity = new Expence_Entity();
+		
+		entity.setAmount(addEntity.getAmount());
+		entity.setCategory(addEntity.getCategory());
+		entity.setDate(addEntity.getDate());
+		entity.setTitle(addEntity.getTitle());
+
+		expenceRepository.save(entity);
+		return ResponseEntity.ok("Expense added successfully");
 	}
 	
 	// Update an existing expense
-	public Expence_Entity updateExpence(int id, Expence_Entity entity) {
-		Predicate<? super Expence_Entity> predicate = expence -> expence.getId() == id;
-		expences.removeIf(predicate);
-		entity.setId(id);
-		expences.add(entity);
-		return entity;
+	public ResponseEntity<String> updateExpence(int id, ExpenceUpdateDTO entity) {
+		Expence_Entity existingExpense = retrieveFromId(id)
+				.orElseThrow(()-> new ExpencesNotFoundException("Expense not found with id = " + id));
+		
+		if(entity.getAmount() != null) {
+			existingExpense.setAmount(entity.getAmount());
+		}
+		
+		if(entity.getCategory() != null) {
+			existingExpense.setCategory(entity.getCategory());
+		}
+		
+		if(entity.getTitle() != null) {
+			existingExpense.setTitle(entity.getTitle());
+		}
+		
+		if(entity.getDate() != null) {
+			existingExpense.setDate(entity.getDate());
+		}
+		
+		expenceRepository.save(existingExpense);
+		
+		return ResponseEntity.ok("Expense Updated successfully with id = " + id);
+	}
+
+	public List<Expence_Entity> retrieveByCategory(String category) {
+		return expenceRepository.findByCategory(category);
 	}
 	
 }

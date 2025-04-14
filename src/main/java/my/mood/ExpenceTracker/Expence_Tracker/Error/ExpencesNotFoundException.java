@@ -1,4 +1,4 @@
-package my.mood.ExpenceTracker.Expence_Tracker.Expence;
+package my.mood.ExpenceTracker.Expence_Tracker.Error;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

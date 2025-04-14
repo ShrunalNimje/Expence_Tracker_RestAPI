@@ -23,7 +23,11 @@ public class SecurityConfig {
 		
 		// 1) To authenticate each and every request which will come into system
 		http.authorizeHttpRequests(
-				auth -> auth.anyRequest().authenticated()
+				auth -> auth
+				.requestMatchers("/v3/api-docs/**", 
+	                    "/swagger-ui/**", 
+	                    "/swagger-ui.html").permitAll()
+				.anyRequest().authenticated()
 				);
 		
 		// 2) If request is not authenticated, a pop up is shown

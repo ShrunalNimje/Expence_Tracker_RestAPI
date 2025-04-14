@@ -23,8 +23,9 @@ public class Expence_Entity {
 	@Size(min = 3, message = "Title must be at least of 3 characters")
 	private String title;
 	
+	@NotNull(message = "Amount should not be emmpty")
 	@Min(value = 1, message = "Amount should be greater than 0")
-	private int amount;
+	private Integer amount;
 	
 	@NotBlank(message = "Category should not be emmpty")
 	@Size(min = 3, message = "Category must be at least of 3 characters")
@@ -38,7 +39,7 @@ public class Expence_Entity {
 		
 	}
 	
-	public Expence_Entity(int id, String title, int amount, String category, LocalDate date) {
+	public Expence_Entity(int id, String title, Integer amount, String category, LocalDate date) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -63,11 +64,11 @@ public class Expence_Entity {
 		this.title = title;
 	}
 
-	public int getAmount() {
+	public Integer getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
 

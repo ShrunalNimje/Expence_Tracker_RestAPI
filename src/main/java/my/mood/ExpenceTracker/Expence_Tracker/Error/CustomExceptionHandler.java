@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import my.mood.ExpenceTracker.Expence_Tracker.Expence.ExpencesNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice

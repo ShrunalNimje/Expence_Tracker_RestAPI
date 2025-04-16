@@ -28,6 +28,14 @@ A simple yet efficient **Expense Tracker API** built using **Spring Boot** with 
 | `PUT`   | `/api/expenses/{id}`      | Update an existing expense |
 | `DELETE`| `/api/expenses/{id}`      | Delete an expense          |
 
+## 📘 Swagger Documentation
+
+You can access the interactive API docs at:
+
+```sh
+http://localhost:8080/swagger-ui/index.html
+```
+
 ## 🔧 Setup and Installation
 
 ### 1️⃣ Clone the repository
